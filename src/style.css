@@ -5,13 +5,104 @@
 }
 
 
+.modal {
+  display: flex;
+  width: 750px;
+  border-radius: 300px 0px;
+  background: #fff2fd;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-left: 30px;
+  height: 600px;
+  overflow-y: scroll;
+  padding-top: 300px;
+}
+
+.overlay {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.781);
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__logo {
+  width: 132px;
+  height: 132px;
+  margin-bottom: 40px;
+}
+
+.modal-body {
+
+  height: 700px;
+  display: flex;
+  justify-content: center;
+}
+
+.modal-body__btn {
+  border: 1px solid #4c00fe;
+  border-radius: 5px;
+  width: 255px;
+  height: 40px;
+  font-weight: 500;
+  font-size: 16px;
+  color: #4c00fe;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-right: 10px;
+  padding: 10px;
+  margin-bottom: 32px;
+}
+
+.modal-body__img {
+  width: 271px;
+  height: 618px;
+  margin-right: 60px;
+  object-fit: cover;
+
+}
+
+
+.modal-body-info__btn {
+  margin-top: 20px;
+  margin-bottom: 31px;
+  border-radius: 5px;
+  width: 145px;
+  height: 40px;
+  text-transform: uppercase;
+  background: #4c00fe;
+  color: white;
+  border: none;
+}
+
+
+.modal-body-info__title {
+  margin-bottom: 7px;
+  color: #dc56c5;
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.modal-body-info__text {
+  margin-bottom: 20px;
+  font-weight: 400;
+  font-size: 18px;
+  color: #0e0e0e;
+}
+
 .container {
   margin-left: 115px;
   margin-right: 115px;
 }
 
 .header-wraper {
-  background: url(/pic.png);
+  background: url(/buyTicket/public/pic.png);
 }
 
 .header {
@@ -85,7 +176,7 @@ input:focus-visible {
 }
 
 .main-wraper {
-  background: url(/bg\ body.png) no-repeat center/cover;
+  background: url(/buyTicket/public/bdBOdy.png) no-repeat center/cover;
 }
 
 .main {
@@ -140,10 +231,10 @@ input:focus-visible {
   top: -13px;
 }
 
-.footer__text{
+.footer__text {
   font-family: var(--font-family);
-font-weight: 400;
-font-size: 16px;
-text-align: center;
-color: #939393;
+  font-weight: 400;
+  font-size: 16px;
+  text-align: center;
+  color: #939393;
 }
