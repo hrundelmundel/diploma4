@@ -7,7 +7,7 @@ window.addEventListener('load', async () => {
   renderEvents(events);
 });
 
-let currentPage = 0;
+let Page = 1;
 let currentKeyword = '';
 let currentCountry = 'UA';
 
