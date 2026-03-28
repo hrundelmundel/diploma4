@@ -50,6 +50,7 @@ async function createMarkup(arr) {
   cards.forEach(element => {
     element.addEventListener('click', () => {
       let poster = element.firstElementChild.src
+      console.log(poster)
       modalPic.src = poster
       cardPic.src = poster
       modalLogo.src = poster

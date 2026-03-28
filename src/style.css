@@ -207,6 +207,7 @@ input:focus-visible {
 .main-cards-card {
     padding-bottom: 50px;
     width: 300px;
+    position: relative;
 }
 .main-cards-card-pic {
     border-top-left-radius: 30px;
@@ -241,11 +242,9 @@ input:focus-visible {
     padding-left: 3px;
 }
 
-.main-block {
-  position: relative;
-}
 
-.main-block::before {
+
+.main-cards-card::before {
   content: '';
   position: absolute;
   border: 1px solid rgba(220, 86, 197, 0.3);
@@ -259,6 +258,10 @@ input:focus-visible {
 display: flex;
 justify-content: center;
 align-items: center;
+}
+
+.footer-pagination{
+  display: flex;
 }
 .footer-pagination-page {
   display: flex;
