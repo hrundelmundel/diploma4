@@ -1,65 +1,77 @@
-import fetchUsers from "./getApi.js"; 
+import fetchUsers from "./getApi";
+
 import './style.css';
 
-const eventsContainer = document.querySelector('.main-block');
-const searchInput = document.querySelector('.header-bottom-l__input');
-const moreBtn = document.querySelector('.modal-body__btn');
-
-let page = 0;
-let keyword = '';
-let country = 'UA';
-
-async function loadEvents(reset = false) {
-  alert('ffsdfs')
-  if (reset) {
-    page = 0;
-    eventsContainer.innerHTML = '';
-  }
-
-  try {
-    alert('тест трац')
-    const data = await fetchUsers({ keyword, page, country });
-
-
-    if (!data?._embedded?.events) {
-      console.log("Подій не знайдено");
-      return;
-    }
-
-    const events = data._embedded.events;
-
-    events.forEach(event => {
-      const img = event.images;
-      const name = event.name;
-      const date = event.dates;
-      const venue = event._embedded?.venues?.[0];
-
-      eventsContainer.innerHTML += `
-        <div class="card">
-          <img src="${img}" alt="${name}" loading="lazy">
-          <h3>${name}</h3>
-          <p>${date}</p>
-          <span>${venue}</span>
-        </div>
-      `;
+let impotantPage = 1
+const pagination = document.querySelectorAll('.footer-pagination-page')
+pagination.forEach(function (element, index, array) {
+  element.addEventListener('click', function () {
+    pagination.forEach(function (element) {
+      if (element.classList.contains('active-page')) {
+        element.classList.remove('active-page')
+      }
+    })
+    impotantPage = Number(element.textContent)
+    fetchUsers().then((data) => {
+      createMarkup(data._embedded)
     });
+    element.classList.add('active-page')
+  })
+})
+console.log(impotantPage)
 
 
+fetchUsers().then((data) => {
+  createMarkup(data._embedded)
+});
 
-  } catch (err) {
-    console.error("Помилка завантаження");
+const list = document.querySelector(".main");
+let cards
+async function createMarkup(arr) {
+  console.log(arr)
+  const html = await arr.events.map((item) => {
+    console.log(item)
+    return `<div class="main-cards-card">
+                     <img class="main-cards-card-pic" src="${item.images[0].url}" alt="poster"/>
+                     <h2 class="main-cards-card-title">${item.name}</h2>
+<span class="main-cards-card-location-content">${item.locale}</span>
+                   </div>`;
+  }).join("");
+
+
+  list.innerHTML = html;
+  cards = document.querySelectorAll('.main-cards-card')
+
+  const modalAppear = document.querySelector('.overlay')
+  const modalPic = document.querySelector('.modal-body__img')
+  const cardPic = document.querySelector('.main-cards-card-pic')
+  const modalLogo = document.querySelector('.modal-logo')
+  modalAppear.style.display = "none"
+  cards.forEach(element => {
+    element.addEventListener('click', () => {
+      let poster = element.firstElementChild.src
+      modalPic.src = poster
+      cardPic.src = poster
+      modalLogo.src = poster
+      modalAppear.style.display = "flex"
+
+    })
+
+    document.addEventListener('keydown', (event) => {
+      console.log(event.key)
+      if (event.key == 'Escape') {
+        modalAppear.style.display = "none"
+      }
+    })
+    console.log(cards)
+  })
+  function searcPost() {
+    const keyWord = searcInput.value;
+
+    fetchUsers(keyWord).then((data) => {
+      createMarkup(data._embedded)
+    });
   }
+  const searcInput = document.querySelector(".header-search-ticket");
+
 }
-
- loadEvents(true);
-
-searchInput.addEventListener('input', (e) => {
-  keyword = e.target.value.trim();
-  loadEvents(true);
-});
-
-
-moreBtn?.addEventListener('click', () => {
-  page++;
-  loadEvents();
-});
