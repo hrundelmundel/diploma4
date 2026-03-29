@@ -1,5 +1,4 @@
 import fetchUsers from "./getApi";
-
 import './style.css';
 
 let impotantPage = 1
@@ -18,19 +17,15 @@ pagination.forEach(function (element, index, array) {
     element.classList.add('active-page')
   })
 })
-console.log(impotantPage)
-
-
 fetchUsers().then((data) => {
   createMarkup(data._embedded)
 });
-
+let currentCardsData
 const list = document.querySelector(".main");
 let cards
 async function createMarkup(arr) {
-  console.log(arr)
+  currentCardsData = arr.events
   const html = await arr.events.map((item) => {
-    console.log(item)
     return `<div class="main-cards-card">
                      <img class="main-cards-card-pic" src="${item.images[0].url}" alt="poster"/>
                      <h2 class="main-cards-card-title">${item.name}</h2>
@@ -39,50 +34,19 @@ async function createMarkup(arr) {
                    </div>`;
   }).join("");
 
-
-
   list.innerHTML = html;
   cards = document.querySelectorAll('.main-cards-card')
-
   const modalAppear = document.querySelector('.overlay')
   const modalPic = document.querySelector('.modal-body__img')
   const cardPic = document.querySelector('.main-cards-card-pic')
   const modalLogo = document.querySelector('.modal__logo')
-  cards.forEach(element => {
+  const modalList = document.querySelector(".modal-body-info");
+  cards.forEach((element,index) => {
     element.addEventListener('click', () => {
-      let poster = element.firstElementChild.src
-      console.log(poster)
-      modalPic.src = poster
-      cardPic.src = poster
-      console.log(cardPic)
-      console.log(modalLogo)
-      modalLogo.src = poster
-      console.log(modalAppear)
-      modalAppear.style.display = "flex"
-
-    })
-
-    document.addEventListener('keydown', (event) => {
-      console.log(event.key)
-      if (event.key == 'Escape') {
-        modalAppear.style.display = "none"
-      }
-    })
-
-    // console.log(cards)
-  })
-
-
-}
-
-
-const modalList = document.querySelector(".modal-body-info");
-let modalCards
-async function createModal(arr) {
-  console.log(arr)
-  const html = await arr.events.map((item) => {
-    // console.log(item)
-    return `<h2 class="modal-body-info__title">INFO</h2>
+      currentCardsData.forEach(function(item,i){
+        if (index == i) {
+          console.log(item)
+          modalList.innerHTML=`<h2 class="modal-body-info__title">INFO</h2>
           <p class="modal-body-info__text">${item.name}</p>
           <h2 class="modal-body-info__title">WHEN</h2>
           <span class="modal-body-info__text">${item.dates.start.localDate}</span>
@@ -102,7 +66,7 @@ async function createModal(arr) {
             <path d="M19.3333 0L17.771 0L17.771 19.3333H19.3333L19.3333 0Z" fill="#0E0E0E" />
             <path d="M22.5555 0L20.9932 0L20.9932 19.3333H22.5555L22.5555 0Z" fill="#0E0E0E" />
           </svg>
-          <span class="modal-body-info__text">${item.priceRanges[0].min}</span> <br>
+          <span class="modal-body-info__text">Min price</span> <br>
           <button class="modal-body-info__btn">buy tickets</button> <br>
           <svg width="29" height="20" viewBox="0 0 29 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3.22222 0L0 0L0 19.3333H3.22222L3.22222 0Z" fill="#0E0E0E" />
@@ -113,38 +77,36 @@ async function createModal(arr) {
             <path d="M19.3333 0L17.771 0L17.771 19.3333H19.3333L19.3333 0Z" fill="#0E0E0E" />
             <path d="M22.5555 0L20.9932 0L20.9932 19.3333H22.5555L22.5555 0Z" fill="#0E0E0E" />
           </svg> 
-          <span class="modal-body-info__text">VIP ${item.priceRanges[0].max}</span> <br>
-          <button class="modal-body-info__btn">buy tickets</button>`;
-  }).join("");
+          <span class="modal-body-info__text">VIP Max price</span> <br>
+          <button class="modal-body-info__btn">buy tickets</button>
+           <a style="cursor: pointer" target="_blank" href="${item._embedded.attractions[0].externalLinks.homepage[0].url}"><button class="modal-body__btn">MORE FROM THIS AUTHOR</button></a>
+          `
+        }else{
+          null
+        }
+      })
+      let poster = element.firstElementChild.src
+      modalPic.src = poster
+      cardPic.src = poster
+      modalLogo.src = poster
+      modalAppear.style.display = "flex"
 
-  modalList.innerHTML = html;
-
+    })
+    document.addEventListener('keydown', (event) => {
+      if (event.key == 'Escape') {
+        modalAppear.style.display = "none"
+      }
+    })
+  })
 }
-const modalTitle = document.querySelector('.main-cards-card-title')
-function modalPost() {
-
-  fetchUsers().then((data) => {
-    createModal(data._embedded)
-
-  });
-}
-
-modalTitle.addEventListener('click', () => {
-  modalPost()
-})
-
-
 
 const searcInput = document.querySelector(".header-bottom-l__input")
 const searchBtn = document.querySelector('.header-bottom-l__svg')
 function searcPost() {
   const keyWord = searcInput.value;
-
   fetchUsers(keyWord).then((data) => {
     createMarkup(data._embedded)
-
   });
-
 }
 searchBtn.addEventListener('click', () => {
   searcPost()
