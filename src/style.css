@@ -312,3 +312,107 @@ input:focus-visible {
   text-align: center;
   color: #939393;
 }
+
+
+
+@media (max-width: 768px) {
+
+  .container {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .header-title {
+    font-size: 32px;
+  }
+
+  .header-bottom {
+    flex-direction: column;
+    row-gap: 20px;
+  }
+
+  .main {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 50px;
+  }
+
+  .main-cards {
+    justify-content: center;
+    column-gap: 30px;
+    row-gap: 30px;
+  }
+
+  .main-cards-card {
+    width: 45%;
+  }
+
+  
+  .modal {
+    width: 90%;
+    height: auto;
+    padding: 20px;
+    border-radius: 50px 0;
+  }
+
+  .modal-body {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+  }
+
+  .modal-body__img {
+    width: 200px;
+    height: auto;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+}
+
+
+
+@media (max-width: 480px) {
+
+  .header-title {
+    font-size: 24px;
+  }
+
+
+  .header-bottom-r__input {
+    width: 100%;
+  }
+
+  .main-cards-card {
+    width: 100%;
+  }
+
+  .main-cards-card-pic {
+    height: 180px;
+  }
+
+  .modal {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .modal__logo {
+    width: 90px;
+    height: 90px;
+  }
+
+  .modal-body__btn {
+    width: 100%;
+  }
+
+  .modal-body-info__title {
+    font-size: 18px;
+  }
+
+  .modal-body-info__text {
+    font-size: 14px;
+  }
+
+  .footer__text {
+    font-size: 14px;
+  }
+}
